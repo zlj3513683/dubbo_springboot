@@ -1,11 +1,32 @@
+
 dubbo:
   application:
     name: dubbo_provider
   registry:
     protocol: zookeeper
-    address: zookeeper://127.0.0.1:2181
+    address: zookeeper://192.168.45.128:2181
   protocol:
     name: dubbo
-    port: 20880
+    port: 20782
   scan:
     base-packages: zlj.study.provider.service
+  provider:
+    version: 1.0.1
+#  provider:
+#    filter: testFilter
+
+spring:
+  redis:
+    host: 192.168.45.128
+    port: 6379
+    #password: 123456
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+    lettuce:
+      shutdown-timeout: 0
+server:
+  port: 8182

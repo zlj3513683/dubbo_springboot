@@ -3,47 +3,43 @@ package zlj.study.provider.service;
 import com.api.service.DemoService;
 import com.api.service.User;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.CompletableFuture;
-
 /**
  * 功能：
+ * group：当一个接口有多种实现时，可以用group区分；
+ * version：当一个接口的实现，出现不兼容升级时，可以用版本号过渡，版本号不同的服务相互间不引用；
  *
  * @author zoulinjun
  * @date 2020/11/28
  */
-//@Service(version = "1.0.0",interfaceClass = DemoService.class,timeout = 10000,group = "dev")
-//@Service(version = "1.0.0",interfaceClass = DemoService.class,timeout = 10000)
-@Service(group = "dev")
+//@Service(version = "1.0.1",interfaceClass = DemoService.class,timeout = 10000,group = "test")
+//@Service(version = "1.0.1",interfaceClass = DemoService.class,timeout = 10000)
+@Service(group = "test")
 @Slf4j
-public class DemoServiceImpl implements DemoService {
+public class DemoServiceImpl1 implements DemoService {
 
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
-    @Autowired
-    private DemoService demoService;
-
     @Override
     public String ins(User user,int id,String ss,long[] ids,User[] users,Integer iis) {
-        log.info("version 1.0.0");
-        log.info("group dev");
+        log.info("version 1.0.1");
+        log.info("group test");
         log.info(redisTemplate.opsForValue().get("test"));
+        System.out.println(user);
         System.out.println(id);
         System.out.println(user);
-        return "11111";
+        return "2222";
     }
 
     @Override
     public String ins1(User user, int id, String ss, long[] ids, User[] users, Integer iis, String res) {
-        log.info("进来了最终的方法");
-        log.info("上一个方法："+res);
-        return "SUCESS";
+        log.info("最终方法2");
+        return "SUCCESS_2";
     }
 
     @Override
@@ -62,41 +58,11 @@ public class DemoServiceImpl implements DemoService {
 
     @Override
     public String upd(int id) {
-
-//        String hh = null;
-//        hh.getClass();
-        int i = 9;
-        int j = i/0;
-        int k = 0/i;
-
-        throw new NullPointerException();
-//        return "修改成功";
+        return "修改成功";
     }
 
     @Override
     public String sel(Integer id) {
         return "查询成功";
-    }
-
-
-    private String testAsync()  {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return "async_success";
-    }
-
-    @Override
-    public CompletableFuture<String> asyncTest() {
-        return CompletableFuture.supplyAsync(()->{
-            return testAsync();
-        });
-    }
-
-    @Override
-    public void noParams() {
-        log.info("this is a no parmas method");
     }
 }

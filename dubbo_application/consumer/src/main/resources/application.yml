@@ -3,7 +3,14 @@ dubbo:
     name: dubbo_consumer
   registry:
     protocol: zookeeper
-    address: zookeeper://127.0.0.1:2181
+    address: zookeeper://192.168.45.128:2181
+#    address: zookeeper://192.168.16.111:2181
+#  consumer:
+#    version: 1.0.1
+#  consumer:
+#    filter: consumerFilter
+#  protocol:
+#    serialization:kryo
 server:
-  port: 8081
+  port: 8087
 
